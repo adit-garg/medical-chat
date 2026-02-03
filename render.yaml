@@ -10,7 +10,7 @@ services:
     plan: free
     rootDir: .
     buildCommand: |
-      cd backend && npm ci && npx prisma generate && npx prisma migrate deploy && npm run build && cp -r ../frontend ./public
+      cd backend && npm ci --include=dev && npx prisma generate && npx prisma migrate deploy && npm run build && cp -r ../frontend ./public
     startCommand: cd backend && npm start
     envVars:
       - key: NODE_ENV

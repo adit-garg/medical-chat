@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { body } from 'express-validator';
 import { authenticate } from '../middleware/auth.middleware';
@@ -23,7 +23,7 @@ router.post(
     body('audioData').optional(),
   ],
   validate,
-  async (req, res) => {
+  async (req: Request, res: Response) => {
     try {
       const { conversationId, content, type, audioData } = req.body;
 

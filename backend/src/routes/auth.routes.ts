@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { body } from 'express-validator';
 import { PrismaClient, UserRole } from '@prisma/client';
 import bcrypt from 'bcryptjs';
@@ -27,7 +27,7 @@ router.post(
     body('language').optional().isLength({ min: 2, max: 5 }),
   ],
   validate,
-  async (req, res) => {
+  async (req: Request, res: Response) => {
     try {
       const { email, password, name, role, language } = req.body;
 
@@ -99,7 +99,7 @@ router.post(
     body('password').notEmpty(),
   ],
   validate,
-  async (req, res) => {
+  async (req: Request, res: Response) => {
     try {
       const email = req.body.email as string;
       const password = req.body.password as string;
@@ -167,7 +167,7 @@ router.post(
  * POST /api/auth/refresh
  * Refresh access token
  */
-router.post('/refresh', async (req, res) => {
+router.post('/refresh', async (req: Request, res: Response) => {
   try {
     const { refreshToken } = req.body;
 
@@ -213,7 +213,7 @@ router.post('/refresh', async (req, res) => {
  * GET /api/auth/me
  * Get current user profile
  */
-router.get('/me', authenticate, async (req, res) => {
+router.get('/me', authenticate, async (req: Request, res: Response) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.userId },
@@ -242,7 +242,7 @@ router.get('/me', authenticate, async (req, res) => {
  * POST /api/auth/logout
  * Logout user (invalidate refresh token)
  */
-router.post('/logout', authenticate, async (req, res) => {
+router.post('/logout', authenticate, async (req: Request, res: Response) => {
   try {
     const { refreshToken } = req.body;
 

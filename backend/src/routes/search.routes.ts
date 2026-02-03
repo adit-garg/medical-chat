@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { authenticate } from '../middleware/auth.middleware';
 
@@ -11,7 +11,7 @@ router.use(authenticate);
  * GET /api/search?q=query&conversationId=optional
  * Search messages across conversations
  */
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
   try {
     const { q: query, conversationId } = req.query;
 

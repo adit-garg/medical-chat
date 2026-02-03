@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { authenticate } from '../middleware/auth.middleware';
 import { aiService } from '../services/ai.service';
@@ -12,7 +12,7 @@ router.use(authenticate);
  * POST /api/summaries/:conversationId
  * Generate AI summary for conversation
  */
-router.post('/:conversationId', async (req, res) => {
+router.post('/:conversationId', async (req: Request, res: Response) => {
   try {
     const { conversationId } = req.params;
 
@@ -85,7 +85,7 @@ router.post('/:conversationId', async (req, res) => {
  * GET /api/summaries/:conversationId
  * Get existing summary
  */
-router.get('/:conversationId', async (req, res) => {
+router.get('/:conversationId', async (req: Request, res: Response) => {
   try {
     const { conversationId } = req.params;
 

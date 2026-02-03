@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { body } from 'express-validator';
 import { authenticate } from '../middleware/auth.middleware';
@@ -17,7 +17,7 @@ router.patch(
   '/:id/language',
   [body('language').isLength({ min: 2, max: 5 }).trim()],
   validate,
-  async (req, res) => {
+  async (req: Request, res: Response) => {
     try {
       const conversationId = req.params.id;
       const { language } = req.body;
@@ -51,7 +51,7 @@ router.patch(
   }
 );
 
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
   try {
     const conversations = await prisma.conversation.findMany({
       where: {
@@ -70,7 +70,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id/messages', async (req, res) => {
+router.get('/:id/messages', async (req: Request, res: Response) => {
   try {
     const messages = await prisma.message.findMany({
       where: { conversationId: req.params.id },
