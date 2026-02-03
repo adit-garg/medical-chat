@@ -1,0 +1,21 @@
+# Render Blueprint - Medical Translator (API + frontend in one service)
+# Set DATABASE_URL, JWT_SECRET, (optional) OPENAI_API_KEY in Render Dashboard after creating the service.
+# Option A: Add a PostgreSQL database in Render and use its Internal URL as DATABASE_URL.
+# Option B: Use Neon.xyz or Supabase free PostgreSQL and paste the connection string as DATABASE_URL.
+services:
+  - type: web
+    name: medical-translator
+    runtime: node
+    region: oregon
+    plan: free
+    rootDir: .
+    buildCommand: |
+      cd backend && npm ci && npx prisma generate && npx prisma migrate deploy && npm run build && cp -r ../frontend ./public
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        generateValue: true
